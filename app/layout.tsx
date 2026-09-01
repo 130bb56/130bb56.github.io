@@ -20,7 +20,7 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    "https://academic-profile-draft-130bb56.illectual.chatgpt.site",
+    "https://130bb56.github.io",
   ),
   title: "Your Name — ML Systems Research",
   description:
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://academic-profile-draft-130bb56.illectual.chatgpt.site/og.png",
+        url: "https://130bb56.github.io/og.png",
         width: 1200,
         height: 630,
         alt: "Your Name — ML Systems Research",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description:
       "Academic profile, selected work, technical writing, and curriculum vitae.",
     images: [
-      "https://academic-profile-draft-130bb56.illectual.chatgpt.site/og.png",
+      "https://130bb56.github.io/og.png",
     ],
   },
   robots: {

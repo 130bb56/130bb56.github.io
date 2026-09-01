@@ -29,6 +29,9 @@
 }
 
 :root {
+  --font-profile-sans: "Source Sans 3", Arial, sans-serif;
+  --font-profile-serif: "Source Serif 4", Georgia, serif;
+  --font-profile-mono: "IBM Plex Mono", Consolas, monospace;
   --radius: 2px;
   --paper: #fbfaf7;
   --paper-deep: #f2f0ea;
