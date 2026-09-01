@@ -1,0 +1,135 @@
+export const metadata = {
+  slug: 'introduction-to-bayesian-filter',
+  title: 'A Practical Introduction to Bayesian Filtering',
+  date: '2026-09-01',
+  displayDate: 'September 1, 2026',
+  description:
+    'A compact derivation of the prediction–correction cycle, with a discrete C++ implementation.',
+  tags: ['Bayesian Inference', 'State Estimation', 'C++'],
+};
+
+Bayesian filtering is a general recipe for estimating a hidden state from noisy measurements. Instead of committing to one guess, the filter maintains a probability distribution and revises it whenever a control input or observation arrives. This viewpoint is useful in robotics, tracking, sensor fusion, and many sequential inference problems.
+
+This note develops the two operations at the center of the method: **prediction**, which moves uncertainty through a system model, and **correction**, which incorporates evidence from a sensor.
+
+## Problem setup
+
+Let $x_t$ denote the hidden state at time $t$, $u_t$ the control or action applied between two time steps, and $z_t$ the newest observation. The complete histories are abbreviated as $u_{1:t}$ and $z_{1:t}$.
+
+The posterior distribution after processing the latest observation is called the belief:
+
+$$
+\operatorname{bel}_t(x_t)
+= p(x_t \mid z_{1:t}, u_{1:t}).
+$$
+
+For a mobile robot, $x_t$ might contain position, velocity, and orientation. For a discrete diagnostic system, it might simply identify one of several operating modes. The same recursion applies in both cases; integrals become sums when the state space is discrete.
+
+## Models and conditional independence
+
+A Bayesian filter needs two probabilistic models.
+
+1. The **transition model** $p(x_t \mid x_{t-1}, u_t)$ describes how the previous state and current action produce a new state.
+2. The **observation model** $p(z_t \mid x_t)$ describes how likely a measurement is when the system occupies a particular state.
+
+The standard first-order Markov assumptions say that the new state depends on the past through $x_{t-1}$ and $u_t$, while the new observation depends on the past through $x_t$. These assumptions are what make recursive estimation possible: the previous belief is a sufficient summary of all earlier data.
+
+## Prediction
+
+Before reading $z_t$, propagate the previous posterior through the transition model. The resulting prior, or predicted belief, is
+
+$$
+\overline{\operatorname{bel}}_t(x_t)
+= \int p(x_t \mid x_{t-1}, u_t)
+  \operatorname{bel}_{t-1}(x_{t-1})\,dx_{t-1}.
+$$
+
+This is an application of the law of total probability. Every possible previous state contributes to the probability of the new state, weighted by how plausible that previous state already was. A noisy transition model generally spreads probability mass and therefore increases uncertainty.
+
+## Correction
+
+Once the observation arrives, Bayes' rule reweights the prediction by the sensor likelihood:
+
+$$
+\operatorname{bel}_t(x_t)
+= \eta\,p(z_t \mid x_t)
+  \overline{\operatorname{bel}}_t(x_t),
+$$
+
+where $\eta$ is the normalization constant that makes the posterior integrate to one:
+
+$$
+\eta^{-1}
+= \int p(z_t \mid x_t)
+  \overline{\operatorname{bel}}_t(x_t)\,dx_t.
+$$
+
+States that predict the observed measurement receive more probability mass; states that are inconsistent with it are suppressed. The filter alternates between these two steps as data arrives:
+
+$$
+\operatorname{bel}_{t-1}
+\xrightarrow{\text{transition}}
+\overline{\operatorname{bel}}_t
+\xrightarrow{\text{observation}}
+\operatorname{bel}_t.
+$$
+
+## A discrete implementation
+
+For a finite state space, both integrals become sums. The following compact C++ example implements one prediction–correction cycle. The transition matrix is indexed as `transition[next][previous]`, while `likelihood[state]` stores $p(z_t \mid x_t)$ for the current observation.
+
+```cpp title="bayesian_filter.cpp"
+#include <cmath>
+#include <numeric>
+#include <stdexcept>
+#include <vector>
+
+using Distribution = std::vector<double>;
+using TransitionMatrix = std::vector<Distribution>;
+
+Distribution predict(const Distribution& belief,
+                     const TransitionMatrix& transition) {
+  Distribution predicted(belief.size(), 0.0);
+
+  for (std::size_t next = 0; next < belief.size(); ++next) {
+    for (std::size_t previous = 0; previous < belief.size(); ++previous) {
+      predicted[next] += transition[next][previous] * belief[previous];
+    }
+  }
+
+  return predicted;
+}
+
+Distribution correct(const Distribution& predicted,
+                     const Distribution& likelihood) {
+  Distribution posterior(predicted.size(), 0.0);
+
+  for (std::size_t state = 0; state < predicted.size(); ++state) {
+    posterior[state] = likelihood[state] * predicted[state];
+  }
+
+  const double evidence =
+      std::accumulate(posterior.begin(), posterior.end(), 0.0);
+  if (evidence <= 0.0 || !std::isfinite(evidence)) {
+    throw std::runtime_error("observation has zero probability");
+  }
+
+  for (double& probability : posterior) {
+    probability /= evidence;
+  }
+
+  return posterior;
+}
+```
+
+The code intentionally separates the two operations. In a real system, the transition and likelihood values would be generated from calibrated motion and sensor models rather than stored as fixed arrays.
+
+## Interpretation
+
+The recursion exposes an important engineering tradeoff. A confident but inaccurate transition model can push the posterior toward the wrong region, while an overconfident sensor model can make one noisy measurement dominate the estimate. Reliable filters therefore require not only correct equations but also probability models whose uncertainty matches the physical system.
+
+Kalman filters provide a closed-form specialization for linear Gaussian systems. Particle filters approximate the same Bayesian recursion with weighted samples and can represent nonlinear or multimodal distributions. Both are concrete implementations of the prediction–correction pattern derived above.
+
+## Reference note
+
+This independently written demonstration was informed by Lei Mao's [Introduction to Bayesian Filter](https://leimao.github.io/article/Introduction-to-Bayesian-Filter/) and is published here to validate the blog's mathematical typesetting and syntax-highlighting pipeline.

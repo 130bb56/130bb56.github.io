@@ -4,12 +4,16 @@ import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import BayesianFilterArticle, {
+  metadata as bayesianFilterMetadata,
+} from '@/content/articles/introduction-to-bayesian-filter.mdx';
 
 const viewIds = [
   'home',
   'cv',
   'publications',
   'articles',
+  'article-bayesian-filter',
   'projects',
   'contact',
 ] as const;
@@ -510,13 +514,55 @@ export default function Home() {
             title="Articles"
             description="Long-form notes on accelerator kernels, performance analysis, and ML systems."
           />
-          <div className="empty-state">
-            <p>No articles have been published yet.</p>
-            <span>
-              Future entries will use readable TeX-style mathematics, restrained
-              syntax highlighting, and a narrow scholarly reading column.
-            </span>
+          <div className="article-list">
+            <a
+              className="article-card"
+              href="#article-bayesian-filter"
+              onClick={() => setActiveView('article-bayesian-filter')}
+            >
+              <div className="article-card-meta">
+                <time dateTime={bayesianFilterMetadata.date}>
+                  {bayesianFilterMetadata.displayDate}
+                </time>
+                <span>{bayesianFilterMetadata.tags.join(' · ')}</span>
+              </div>
+              <h2>{bayesianFilterMetadata.title}</h2>
+              <p>{bayesianFilterMetadata.description}</p>
+              <span className="article-card-link">Read article →</span>
+            </a>
           </div>
+        </section>
+
+        <section
+          className={`view content-view article-view${
+            activeView === 'article-bayesian-filter' ? ' is-active' : ''
+          }`}
+          id="article-bayesian-filter"
+          aria-labelledby="bayesian-filter-title"
+          aria-hidden={activeView !== 'article-bayesian-filter'}
+        >
+          <a
+            className="article-back-link"
+            href="#articles"
+            onClick={() => setActiveView('articles')}
+          >
+            ← All articles
+          </a>
+          <header className="article-header">
+            <p className="page-kicker">Technical Note</p>
+            <h1 id="bayesian-filter-title">{bayesianFilterMetadata.title}</h1>
+            <p className="article-deck">{bayesianFilterMetadata.description}</p>
+            <div className="article-byline">
+              <span>Seokhyeon Lee</span>
+              <time dateTime={bayesianFilterMetadata.date}>
+                {bayesianFilterMetadata.displayDate}
+              </time>
+              <span>{bayesianFilterMetadata.tags.join(' · ')}</span>
+            </div>
+          </header>
+          <article className="article-prose">
+            <BayesianFilterArticle />
+          </article>
         </section>
 
         <section
