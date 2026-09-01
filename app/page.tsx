@@ -165,6 +165,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (window.location.hash === `#${activeView}`) {
+      document.getElementById(activeView)?.focus({ preventScroll: true });
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [activeView]);
 
@@ -192,7 +196,6 @@ export default function Home() {
           href="#home"
           aria-label="Seokhyeon Lee, home"
           aria-current={activeView === 'home' ? 'page' : undefined}
-          onClick={() => setActiveView('home')}
         >
           Seokhyeon Lee
         </a>
@@ -203,7 +206,6 @@ export default function Home() {
               href={`#${item.id}`}
               key={item.id}
               aria-current={activeView === item.id ? 'page' : undefined}
-              onClick={() => setActiveView(item.id)}
             >
               {item.label}
             </a>
@@ -250,6 +252,7 @@ export default function Home() {
             activeView === 'home' ? ' is-active' : ''
           }`}
           id="home"
+          tabIndex={-1}
           aria-labelledby="home-title"
           aria-hidden={activeView !== 'home'}
         >
@@ -293,6 +296,7 @@ export default function Home() {
             activeView === 'cv' ? ' is-active' : ''
           }`}
           id="cv"
+          tabIndex={-1}
           aria-labelledby="cv-title"
           aria-hidden={activeView !== 'cv'}
         >
@@ -488,6 +492,7 @@ export default function Home() {
             activeView === 'publications' ? ' is-active' : ''
           }`}
           id="publications"
+          tabIndex={-1}
           aria-labelledby="publications-title"
           aria-hidden={activeView !== 'publications'}
         >
@@ -511,6 +516,7 @@ export default function Home() {
             activeView === 'articles' ? ' is-active' : ''
           }`}
           id="articles"
+          tabIndex={-1}
           aria-labelledby="articles-title"
           aria-hidden={activeView !== 'articles'}
         >
@@ -524,7 +530,6 @@ export default function Home() {
             <a
               className="article-card"
               href="#article-bayesian-filter"
-              onClick={() => setActiveView('article-bayesian-filter')}
             >
               <div className="article-card-meta">
                 <time dateTime={bayesianFilterMetadata.date}>
@@ -544,13 +549,13 @@ export default function Home() {
             activeView === 'article-bayesian-filter' ? ' is-active' : ''
           }`}
           id="article-bayesian-filter"
+          tabIndex={-1}
           aria-labelledby="bayesian-filter-title"
           aria-hidden={activeView !== 'article-bayesian-filter'}
         >
           <a
             className="article-back-link"
             href="#articles"
-            onClick={() => setActiveView('articles')}
           >
             ← All articles
           </a>
@@ -576,6 +581,7 @@ export default function Home() {
             activeView === 'projects' ? ' is-active' : ''
           }`}
           id="projects"
+          tabIndex={-1}
           aria-labelledby="projects-title"
           aria-hidden={activeView !== 'projects'}
         >
@@ -592,6 +598,7 @@ export default function Home() {
             activeView === 'contact' ? ' is-active' : ''
           }`}
           id="contact"
+          tabIndex={-1}
           aria-labelledby="contact-title"
           aria-hidden={activeView !== 'contact'}
         >
