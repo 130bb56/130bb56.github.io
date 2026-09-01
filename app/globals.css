@@ -126,10 +126,7 @@ a {
   color: var(--accent-deep);
 }
 
-body:has(#cv:target) .primary-nav a[href='#cv'],
-body:has(#publications:target) .primary-nav a[href='#publications'],
-body:has(#articles:target) .primary-nav a[href='#articles'],
-body:has(#projects:target) .primary-nav a[href='#projects'] {
+.primary-nav a[aria-current='page'] {
   border-bottom-color: var(--accent);
   color: var(--accent-deep);
 }
@@ -143,7 +140,6 @@ body:has(#projects:target) .primary-nav a[href='#projects'] {
 }
 
 .home-view {
-  display: block;
   min-height: 560px;
   padding: clamp(54px, 8vw, 92px) clamp(28px, 8vw, 84px);
   border: 1px solid var(--line);
@@ -152,12 +148,8 @@ body:has(#projects:target) .primary-nav a[href='#projects'] {
   box-shadow: var(--shadow);
 }
 
-.view:target {
+.view.is-active {
   display: block;
-}
-
-body:has(.view:target) .home-view:not(:target) {
-  display: none;
 }
 
 .page-kicker {

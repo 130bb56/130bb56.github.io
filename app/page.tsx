@@ -1,9 +1,22 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+const viewIds = ['home', 'cv', 'publications', 'articles', 'projects'] as const;
+type ViewId = (typeof viewIds)[number];
+
 const navigation = [
-  { label: 'CV', href: '#cv' },
-  { label: 'PUBLICATIONS', href: '#publications' },
-  { label: 'ARTICLES', href: '#articles' },
-  { label: 'PROJECTS', href: '#projects' },
-];
+  { id: 'cv', label: 'CV' },
+  { id: 'publications', label: 'PUBLICATIONS' },
+  { id: 'articles', label: 'ARTICLES' },
+  { id: 'projects', label: 'PROJECTS' },
+] as const;
+
+function viewFromHash(hash: string): ViewId {
+  const candidate = hash.replace(/^#/, '');
+
+  return viewIds.includes(candidate as ViewId) ? (candidate as ViewId) : 'home';
+}
 
 const workHighlights = [
   <>
@@ -46,10 +59,12 @@ const workHighlights = [
 ];
 
 function PageHeading({
+  id,
   eyebrow,
   title,
   description,
 }: {
+  id: string;
   eyebrow: string;
   title: string;
   description: string;
@@ -57,23 +72,51 @@ function PageHeading({
   return (
     <header className="page-heading">
       <p className="page-kicker">{eyebrow}</p>
-      <h1>{title}</h1>
+      <h1 id={id}>{title}</h1>
       <p>{description}</p>
     </header>
   );
 }
 
 export default function Home() {
+  const [activeView, setActiveView] = useState<ViewId>('home');
+
+  useEffect(() => {
+    const syncViewWithHash = () => {
+      setActiveView(viewFromHash(window.location.hash));
+    };
+
+    syncViewWithHash();
+    window.addEventListener('hashchange', syncViewWithHash);
+
+    return () => window.removeEventListener('hashchange', syncViewWithHash);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [activeView]);
+
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="site-name" href="#home" aria-label="Seokhyeon Lee, home">
+        <a
+          className="site-name"
+          href="#home"
+          aria-label="Seokhyeon Lee, home"
+          aria-current={activeView === 'home' ? 'page' : undefined}
+          onClick={() => setActiveView('home')}
+        >
           Seokhyeon Lee
         </a>
 
         <nav className="primary-nav" aria-label="Primary navigation">
           {navigation.map((item) => (
-            <a href={item.href} key={item.label}>
+            <a
+              href={`#${item.id}`}
+              key={item.id}
+              aria-current={activeView === item.id ? 'page' : undefined}
+              onClick={() => setActiveView(item.id)}
+            >
               {item.label}
             </a>
           ))}
@@ -82,9 +125,12 @@ export default function Home() {
 
       <main className="site-main">
         <section
-          className="view home-view"
+          className={`view home-view${
+            activeView === 'home' ? ' is-active' : ''
+          }`}
           id="home"
           aria-labelledby="home-title"
+          aria-hidden={activeView !== 'home'}
         >
           <p className="page-kicker">ML Systems · Hardware-Aware AI</p>
           <h1 id="home-title">Seokhyeon Lee</h1>
@@ -122,12 +168,16 @@ export default function Home() {
         </section>
 
         <section
-          className="view content-view cv-view"
+          className={`view content-view cv-view${
+            activeView === 'cv' ? ' is-active' : ''
+          }`}
           id="cv"
           aria-labelledby="cv-title"
+          aria-hidden={activeView !== 'cv'}
         >
           <div className="view-toolbar">
             <PageHeading
+              id="cv-title"
               eyebrow="Curriculum Vitae"
               title="Seokhyeon Lee"
               description="Computer systems engineer working on efficient machine learning and accelerator software."
@@ -316,11 +366,15 @@ export default function Home() {
         </section>
 
         <section
-          className="view content-view"
+          className={`view content-view${
+            activeView === 'publications' ? ' is-active' : ''
+          }`}
           id="publications"
           aria-labelledby="publications-title"
+          aria-hidden={activeView !== 'publications'}
         >
           <PageHeading
+            id="publications-title"
             eyebrow="Research Record"
             title="Publications"
             description="Peer-reviewed papers, preprints, and technical reports."
@@ -335,11 +389,15 @@ export default function Home() {
         </section>
 
         <section
-          className="view content-view"
+          className={`view content-view${
+            activeView === 'articles' ? ' is-active' : ''
+          }`}
           id="articles"
           aria-labelledby="articles-title"
+          aria-hidden={activeView !== 'articles'}
         >
           <PageHeading
+            id="articles-title"
             eyebrow="Technical Logbook"
             title="Articles"
             description="Long-form notes on accelerator kernels, performance analysis, and ML systems."
@@ -354,11 +412,15 @@ export default function Home() {
         </section>
 
         <section
-          className="view content-view"
+          className={`view content-view${
+            activeView === 'projects' ? ' is-active' : ''
+          }`}
           id="projects"
           aria-labelledby="projects-title"
+          aria-hidden={activeView !== 'projects'}
         >
           <PageHeading
+            id="projects-title"
             eyebrow="Selected Engineering"
             title="Projects"
             description="Focused implementations that connect algorithms with hardware behavior."
