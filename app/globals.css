@@ -443,20 +443,16 @@ a {
 }
 
 .award-meta {
-  display: grid;
-  justify-items: end;
-  text-align: right;
-}
-
-.award-meta span,
-.award-meta time {
   margin: 0;
   color: var(--ink-subtle);
   font-size: 12px;
+  line-height: 1.5;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .award-meta time {
-  white-space: nowrap;
+  font: inherit;
 }
 
 .tutoring-entry {
@@ -628,6 +624,41 @@ a {
   white-space: nowrap;
 }
 
+.contact-list {
+  display: grid;
+  gap: 0;
+  max-width: 720px;
+  margin: 46px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.contact-list > div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 24px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.contact-list dt {
+  color: var(--ink-strong);
+  font-weight: 700;
+}
+
+.contact-list dd {
+  margin: 0;
+  color: var(--accent-deep);
+}
+
+.contact-list a {
+  border-bottom: 1px solid var(--link-line);
+}
+
+.contact-list a:hover {
+  border-bottom-color: var(--accent-deep);
+  color: var(--accent);
+}
+
 .site-footer {
   display: flex;
   min-height: 74px;
@@ -697,8 +728,12 @@ a {
   }
 
   .award-meta {
-    justify-items: start;
     text-align: left;
+  }
+
+  .contact-list > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 
   .project-results {

@@ -5,7 +5,14 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-const viewIds = ['home', 'cv', 'publications', 'articles', 'projects'] as const;
+const viewIds = [
+  'home',
+  'cv',
+  'publications',
+  'articles',
+  'projects',
+  'contact',
+] as const;
 type ViewId = (typeof viewIds)[number];
 type Theme = 'light' | 'dark';
 
@@ -15,10 +22,12 @@ const themeColors: Record<Theme, string> = {
 };
 
 const navigation = [
+  { id: 'home', label: 'HOME' },
   { id: 'cv', label: 'CV' },
   { id: 'publications', label: 'PUBLICATIONS' },
   { id: 'articles', label: 'ARTICLES' },
   { id: 'projects', label: 'PROJECTS' },
+  { id: 'contact', label: 'CONTACT' },
 ] as const;
 
 function viewFromHash(hash: string): ViewId {
@@ -391,34 +400,30 @@ export default function Home() {
                   Silver Prize, National Mathematics Competition for University
                   Students
                 </h3>
-                <div className="award-meta">
-                  <span>Korean Mathematical Society</span>
-                  <time dateTime="2023">2023</time>
-                </div>
+                <p className="award-meta">
+                  Korean Mathematical Society, <time dateTime="2023">2023</time>
+                </p>
               </article>
               <article>
                 <h3>
                   Silver Prize, National Mathematics Competition for University
                   Students
                 </h3>
-                <div className="award-meta">
-                  <span>Korean Mathematical Society</span>
-                  <time dateTime="2024">2024</time>
-                </div>
+                <p className="award-meta">
+                  Korean Mathematical Society, <time dateTime="2024">2024</time>
+                </p>
               </article>
               <article>
                 <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
-                <div className="award-meta">
-                  <span>Chonnam National University</span>
-                  <time dateTime="2021">2021</time>
-                </div>
+                <p className="award-meta">
+                  Chonnam National University, <time dateTime="2021">2021</time>
+                </p>
               </article>
               <article>
                 <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
-                <div className="award-meta">
-                  <span>Chonnam National University</span>
-                  <time dateTime="2022">2022</time>
-                </div>
+                <p className="award-meta">
+                  Chonnam National University, <time dateTime="2022">2022</time>
+                </p>
               </article>
             </div>
           </section>
@@ -528,31 +533,54 @@ export default function Home() {
             title="Projects"
             description="Focused implementations that connect algorithms with hardware behavior."
           />
-          <article className="project-entry">
-            <div className="project-meta">
-              <time>Feb. 2025 - Mar. 2025</time>
-              <span>CUDA · C++ · PyTorch</span>
+        </section>
+
+        <section
+          className={`view content-view${
+            activeView === 'contact' ? ' is-active' : ''
+          }`}
+          id="contact"
+          aria-labelledby="contact-title"
+          aria-hidden={activeView !== 'contact'}
+        >
+          <PageHeading
+            id="contact-title"
+            eyebrow="Get in Touch"
+            title="Contact"
+            description="For research and professional inquiries, email is the best way to reach me."
+          />
+          <dl className="contact-list">
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href="mailto:130bb56@gmail.com">130bb56@gmail.com</a>
+              </dd>
             </div>
-            <h2>HPMC: High-Performance MNIST Classification</h2>
-            <p>
-              A deterministic end-to-end MLP training pipeline implemented in
-              CUDA/C++ from scratch without cuBLAS or CUTLASS.
-            </p>
-            <dl className="project-results">
-              <div>
-                <dt>Training speedup</dt>
-                <dd>Up to 8x</dd>
-              </div>
-              <div>
-                <dt>GPU memory</dt>
-                <dd>13% lower</dd>
-              </div>
-              <div>
-                <dt>Baseline</dt>
-                <dd>PyTorch</dd>
-              </div>
-            </dl>
-          </article>
+            <div>
+              <dt>GitHub</dt>
+              <dd>
+                <a
+                  href="https://github.com/130bb56"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  github.com/130bb56
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt>LinkedIn</dt>
+              <dd>
+                <a
+                  href="https://www.linkedin.com/in/seokhyeon-lee/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  linkedin.com/in/seokhyeon-lee
+                </a>
+              </dd>
+            </div>
+          </dl>
         </section>
       </main>
 
