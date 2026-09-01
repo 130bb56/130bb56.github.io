@@ -1,9 +1,18 @@
 'use client';
 
+import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 const viewIds = ['home', 'cv', 'publications', 'articles', 'projects'] as const;
 type ViewId = (typeof viewIds)[number];
+type Theme = 'light' | 'dark';
+
+const themeColors: Record<Theme, string> = {
+  light: '#f7f7f7',
+  dark: '#141718',
+};
 
 const navigation = [
   { id: 'cv', label: 'CV' },
@@ -16,6 +25,43 @@ function viewFromHash(hash: string): ViewId {
   const candidate = hash.replace(/^#/, '');
 
   return viewIds.includes(candidate as ViewId) ? (candidate as ViewId) : 'home';
+}
+
+function applyTheme(theme: Theme, persist: boolean) {
+  const root = document.documentElement;
+  root.dataset.theme = theme;
+  root.style.colorScheme = theme;
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', themeColors[theme]);
+
+  if (persist) {
+    try {
+      window.localStorage.setItem('theme', theme);
+    } catch {
+      // The visual preference still applies when storage is unavailable.
+    }
+  }
+}
+
+function preferredTheme(): Theme {
+  try {
+    const storedTheme = window.localStorage.getItem('theme');
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme;
+    }
+  } catch {
+    // Fall through to the document or operating-system preference.
+  }
+
+  const documentTheme = document.documentElement.dataset.theme;
+  if (documentTheme === 'light' || documentTheme === 'dark') {
+    return documentTheme;
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 }
 
 const workHighlights = [
@@ -78,8 +124,21 @@ function PageHeading({
   );
 }
 
+function GitHubMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path
+        fillRule="evenodd"
+        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.337 4.695-4.566 4.943.359.31.678.921.678 1.856 0 1.34-.012 2.421-.012 2.75 0 .267.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
   const [activeView, setActiveView] = useState<ViewId>('home');
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
     const syncViewWithHash = () => {
@@ -95,6 +154,22 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [activeView]);
+
+  useEffect(() => {
+    const initialTheme = preferredTheme();
+    applyTheme(initialTheme, false);
+    const frame = window.requestAnimationFrame(() => setTheme(initialTheme));
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => {
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme, true);
+      return nextTheme;
+    });
+  };
 
   return (
     <div className="site-shell">
@@ -121,6 +196,39 @@ export default function Home() {
             </a>
           ))}
         </nav>
+
+        <div className="header-tools" aria-label="Site controls">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            className="header-icon-button"
+            aria-label={
+              theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+            }
+            aria-pressed={theme === 'dark'}
+            title={
+              theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+            }
+            onClick={toggleTheme}
+          >
+            {theme === 'light' ? (
+              <Moon aria-hidden="true" />
+            ) : (
+              <Sun aria-hidden="true" />
+            )}
+          </Button>
+          <a
+            className="header-icon-button"
+            href="https://github.com/130bb56"
+            aria-label="Open Seokhyeon Lee's GitHub profile in a new tab"
+            title="GitHub profile"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <GitHubMark />
+          </a>
+        </div>
       </header>
 
       <main className="site-main">
@@ -149,7 +257,7 @@ export default function Home() {
           </div>
 
           <div className="profile-links" aria-label="Profile links">
-            <a href="mailto:130bb56@g.skku.edu">Email</a>
+            <a href="mailto:130bb56@gmail.com">Email</a>
             <a
               href="https://github.com/130bb56"
               rel="noreferrer"
@@ -182,32 +290,6 @@ export default function Home() {
               title="Seokhyeon Lee"
               description="Computer systems engineer working on efficient machine learning and accelerator software."
             />
-            <a
-              className="pdf-link"
-              href="/CV.pdf"
-              rel="noreferrer"
-              target="_blank"
-            >
-              View PDF
-            </a>
-          </div>
-
-          <div className="cv-contact" aria-label="Contact information">
-            <a href="mailto:130bb56@g.skku.edu">130bb56@g.skku.edu</a>
-            <a
-              href="https://github.com/130bb56"
-              rel="noreferrer"
-              target="_blank"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/seokhyeon-lee/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              LinkedIn
-            </a>
           </div>
 
           <dl className="cv-summary">
@@ -309,13 +391,34 @@ export default function Home() {
                   Silver Prize, National Mathematics Competition for University
                   Students
                 </h3>
-                <p>Korean Mathematical Society</p>
-                <time>2023, 2024</time>
+                <div className="award-meta">
+                  <span>Korean Mathematical Society</span>
+                  <time dateTime="2023">2023</time>
+                </div>
+              </article>
+              <article>
+                <h3>
+                  Silver Prize, National Mathematics Competition for University
+                  Students
+                </h3>
+                <div className="award-meta">
+                  <span>Korean Mathematical Society</span>
+                  <time dateTime="2024">2024</time>
+                </div>
               </article>
               <article>
                 <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
-                <p>Chonnam National University</p>
-                <time>2021, 2022</time>
+                <div className="award-meta">
+                  <span>Chonnam National University</span>
+                  <time dateTime="2021">2021</time>
+                </div>
+              </article>
+              <article>
+                <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
+                <div className="award-meta">
+                  <span>Chonnam National University</span>
+                  <time dateTime="2022">2022</time>
+                </div>
               </article>
             </div>
           </section>

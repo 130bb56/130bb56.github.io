@@ -7,6 +7,22 @@ import {
 } from 'next/font/google';
 import './globals.css';
 
+const themeInitializer = `(() => {
+  try {
+    const stored = localStorage.getItem('theme');
+    const theme =
+      stored === 'light' || stored === 'dark'
+        ? stored
+        : window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  } catch {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();`;
+
 const display = PT_Sans_Narrow({
   variable: '--font-loaded-display',
   subsets: ['latin'],
@@ -67,7 +83,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="theme-color" content="#f7f7f7" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
+      </head>
       <body
         className={
           display.variable +
