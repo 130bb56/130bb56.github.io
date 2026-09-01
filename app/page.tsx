@@ -246,30 +246,21 @@ export default function Home() {
 
             <div className="equation-block" aria-label="Roofline equation">
               <span className="equation-number">(1)</span>
-              <math
-                xmlns="http://www.w3.org/1998/Math/MathML"
-                display="block"
+              <div
+                className="equation"
                 aria-label="Performance is bounded by the minimum of peak throughput and arithmetic intensity times memory bandwidth"
               >
-                <mrow>
-                  <mi>P</mi>
-                  <mo>≤</mo>
-                  <mi>min</mi>
-                  <mo>(</mo>
-                  <msub>
-                    <mi>P</mi>
-                    <mtext>peak</mtext>
-                  </msub>
-                  <mo>,</mo>
-                  <mi>I</mi>
-                  <mo>·</mo>
-                  <msub>
-                    <mi>B</mi>
-                    <mtext>mem</mtext>
-                  </msub>
-                  <mo>)</mo>
-                </mrow>
-              </math>
+                <i>P</i>
+                <span> ≤ min(</span>
+                <i>P</i>
+                <sub>peak</sub>
+                <span>, </span>
+                <i>I</i>
+                <span> · </span>
+                <i>B</i>
+                <sub>mem</sub>
+                <span>)</span>
+              </div>
             </div>
 
             <div className="definition">

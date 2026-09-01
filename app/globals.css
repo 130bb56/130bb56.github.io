@@ -397,11 +397,13 @@ a { color: inherit; text-decoration: none; }
   background: #f5f3ed;
   text-align: center;
 }
-.equation-block math {
+.equation-block .equation {
   margin: 0;
   font-family: "Cambria Math", "STIX Two Math", serif;
   font-size: clamp(23px, 2.4vw, 32px);
 }
+.equation-block .equation i { font-weight: 500; }
+.equation-block .equation sub { margin-right: .08em; font-size: .6em; }
 .equation-number {
   position: absolute;
   right: 18px;
