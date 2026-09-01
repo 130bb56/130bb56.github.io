@@ -1,56 +1,65 @@
-import type { Metadata } from "next";
-import { IBM_Plex_Mono, Source_Sans_3, Source_Serif_4 } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import {
+  PT_Sans_Narrow,
+  PT_Serif,
+  Source_Code_Pro,
+  Ubuntu,
+} from 'next/font/google';
+import './globals.css';
 
-const sans = Source_Sans_3({
-  variable: "--font-profile-sans",
-  subsets: ["latin"],
+const display = PT_Sans_Narrow({
+  variable: '--font-loaded-display',
+  subsets: ['latin'],
+  weight: ['400', '700'],
 });
 
-const serif = Source_Serif_4({
-  variable: "--font-profile-serif",
-  subsets: ["latin"],
+const ui = Ubuntu({
+  variable: '--font-loaded-ui',
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
 });
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-profile-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const reading = PT_Serif({
+  variable: '--font-loaded-reading',
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
+
+const code = Source_Code_Pro({
+  variable: '--font-loaded-code',
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://130bb56.github.io",
-  ),
-  title: "Your Name — ML Systems Research",
+  metadataBase: new URL('https://130bb56.github.io'),
+  title: 'Seokhyeon Lee — ML Systems',
   description:
-    "Draft academic profile for research in GPU computing, distributed learning systems, and efficient AI.",
+    "Seokhyeon Lee's academic profile in ML systems, hardware-aware AI, and accelerator software.",
   openGraph: {
-    title: "Your Name — ML Systems Research",
+    title: 'Seokhyeon Lee — ML Systems',
     description:
-      "Academic profile, selected work, technical writing, and curriculum vitae.",
-    type: "website",
+      'Academic profile, curriculum vitae, technical work, and projects.',
+    type: 'website',
     images: [
       {
-        url: "https://130bb56.github.io/og.png",
+        url: 'https://130bb56.github.io/og.png',
         width: 1200,
         height: 630,
-        alt: "Your Name — ML Systems Research",
+        alt: 'Seokhyeon Lee — ML Systems',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Your Name — ML Systems Research",
+    card: 'summary_large_image',
+    title: 'Seokhyeon Lee — ML Systems',
     description:
-      "Academic profile, selected work, technical writing, and curriculum vitae.",
-    images: [
-      "https://130bb56.github.io/og.png",
-    ],
+      'Academic profile, curriculum vitae, technical work, and projects.',
+    images: ['https://130bb56.github.io/og.png'],
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
@@ -59,7 +68,17 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={sans.variable + " " + serif.variable + " " + mono.variable}>
+      <body
+        className={
+          display.variable +
+          ' ' +
+          ui.variable +
+          ' ' +
+          reading.variable +
+          ' ' +
+          code.variable
+        }
+      >
         {children}
       </body>
     </html>

@@ -1,357 +1,399 @@
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  BookOpenText,
-  FileText,
-  Mail,
-} from "lucide-react";
-
-const researchAreas = [
-  {
-    number: "01",
-    title: "GPU kernels & compilers",
-    summary:
-      "Reasoning across algorithms, memory hierarchies, and compiler transformations to make irregular workloads run predictably on modern accelerators.",
-    tags: ["CUDA", "Triton", "MLIR"],
-  },
-  {
-    number: "02",
-    title: "Distributed learning systems",
-    summary:
-      "Studying the interaction between collective communication, parallelism strategies, and model structure at training scale.",
-    tags: ["Collectives", "Parallelism", "Profiling"],
-  },
-  {
-    number: "03",
-    title: "Efficient inference",
-    summary:
-      "Reducing latency and memory cost through quantization, batching, and hardware-aware serving without losing statistical quality.",
-    tags: ["LLM serving", "Quantization", "Evaluation"],
-  },
+const navigation = [
+  { label: 'CV', href: '#cv' },
+  { label: 'PUBLICATIONS', href: '#publications' },
+  { label: 'ARTICLES', href: '#articles' },
+  { label: 'PROJECTS', href: '#projects' },
 ];
 
-const selectedWork = [
-  {
-    year: "20XX",
-    type: "Sample manuscript · replace",
-    title: "A Systems Approach to Memory-Bound Tensor Programs",
-    authors: "Your Name, Collaborator Name, Advisor Name",
-    venue: "Venue or manuscript status",
-    abstract:
-      "A concise two-sentence summary should state the systems problem, the core method, and the principal result without marketing language.",
-  },
-  {
-    year: "20XX",
-    type: "Sample project · replace",
-    title: "Communication-Aware Scheduling for Distributed Training",
-    authors: "Your Name, Collaborator Name",
-    venue: "Workshop, preprint, or technical report",
-    abstract:
-      "Use this space for work that demonstrates research taste even when it is still in progress. Link only artifacts that are ready for faculty review.",
-  },
+const workHighlights = [
+  <>
+    Implemented and optimized Tenstorrent NPU kernels for distributed LLM
+    training and inference across pytest validation, Python/C++ bindings, host
+    runtime, device kernels, and the SFPU&apos;s SIMD instructions.
+  </>,
+  <>
+    Designed and implemented a multicore cumsum kernel based on the Sklansky
+    parallel-prefix sum, using NoC multicast and inter/intra-core semaphore
+    synchronization, achieving a 110x speedup over the baseline tt-metal kernel.
+  </>,
+  <>
+    Diagnosed and fixed a nondeterministic hang in composite
+    collective-communication kernels caused by trace replay corrupting
+    L1-resident semaphores (analogous to CUDA Graph replay).{' '}
+    <a
+      className="inline-link"
+      href="https://github.com/tenstorrent/tt-metal/pull/40276"
+      rel="noreferrer"
+      target="_blank"
+    >
+      #40276
+    </a>
+  </>,
+  <>
+    Developed a vLLM plugin for Tenstorrent NPUs, enabling end-to-end serving of
+    models from a few billion to hundreds of billions of parameters, including
+    Qwen3, Llama3, and GPT-OSS, while resolving stability and performance
+    regressions.{' '}
+    <a
+      className="inline-link"
+      href="https://github.com/tenstorrent/tt-metal/pull/43692"
+      rel="noreferrer"
+      target="_blank"
+    >
+      #43692
+    </a>
+  </>,
 ];
 
-const cvColumns = [
-  {
-    label: "Education",
-    entries: [
-      ["20XX — present", "M.S. in Computer Science", "University · Advisor: Name"],
-      ["20XX — 20XX", "B.S. in Computer Science", "University · Honors if verified"],
-    ],
-  },
-  {
-    label: "Research experience",
-    entries: [
-      ["20XX — present", "Research Assistant", "Lab name · one-line scope"],
-      ["20XX — 20XX", "Research Intern", "Institution · one-line scope"],
-    ],
-  },
-  {
-    label: "Selected skills",
-    entries: [
-      ["Systems", "CUDA · Triton · PyTorch", "Linux · C++ · Python"],
-      ["Methods", "Performance modeling", "Profiling · reproducible evaluation"],
-    ],
-  },
-];
+function PageHeading({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <header className="page-heading">
+      <p className="page-kicker">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </header>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="site-shell" id="top">
+    <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Your Name, home">
-          <span className="brand-mark" aria-hidden="true">
-            YN
-          </span>
-          <span className="brand-copy">
-            <strong>Your Name</strong>
-            <small>Academic profile</small>
-          </span>
+        <a className="site-name" href="#home" aria-label="Seokhyeon Lee, home">
+          Seokhyeon Lee
         </a>
 
         <nav className="primary-nav" aria-label="Primary navigation">
-          <a href="#research">Research</a>
-          <a href="#work">Work</a>
-          <a href="#writing">Writing</a>
-          <a href="#cv">CV</a>
+          {navigation.map((item) => (
+            <a href={item.href} key={item.label}>
+              {item.label}
+            </a>
+          ))}
         </nav>
-
-        <a className="header-contact" href="#contact">
-          <Mail size={15} aria-hidden="true" />
-          Contact
-        </a>
       </header>
 
-      <main>
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-main">
-            <p className="eyebrow">Prospective PhD applicant · academic portfolio draft</p>
-            <h1 id="hero-title">Your Name</h1>
-            <p className="hero-role">ML Systems · GPU Computing · Efficient AI</p>
-            <p className="hero-statement">
-              I study how learning algorithms and computer systems can be designed
-              together. My current interests center on fast GPU kernels,
-              communication-efficient training, and reliable inference at scale.
-            </p>
+      <main className="site-main">
+        <section
+          className="view home-view"
+          id="home"
+          aria-labelledby="home-title"
+        >
+          <p className="page-kicker">ML Systems · Hardware-Aware AI</p>
+          <h1 id="home-title">Seokhyeon Lee</h1>
 
-            <div className="hero-actions" aria-label="Profile shortcuts">
-              <a className="action action-primary" href="#research">
-                Research profile
-                <ArrowDownRight size={17} aria-hidden="true" />
-              </a>
-              <a className="action action-secondary" href="#cv">
-                Curriculum vitae
-                <FileText size={16} aria-hidden="true" />
-              </a>
-            </div>
-
-            <p className="draft-notice">
-              Draft notice — identity, institutions, publications, and contact details
-              below are explicit placeholders pending your verified CV.
-            </p>
-          </div>
-
-          <aside className="hero-index" aria-label="Research index">
-            <p className="index-label">Research index</p>
-            <ol>
-              <li>
-                <span>01</span>
-                GPU kernels
-              </li>
-              <li>
-                <span>02</span>
-                Distributed training
-              </li>
-              <li>
-                <span>03</span>
-                Efficient inference
-              </li>
-            </ol>
-            <div className="status-note">
-              <span className="status-dot" aria-hidden="true" />
-              Preparing for U.S. PhD applications
-              <small>Target cycle · 20XX</small>
-            </div>
-          </aside>
-        </section>
-
-        <section className="section" id="research" aria-labelledby="research-title">
-          <div className="section-heading">
-            <div>
-              <p className="section-kicker">01 · Research</p>
-              <h2 id="research-title">Questions I want to pursue</h2>
-            </div>
+          <div className="intro-copy">
             <p>
-              Three focused themes are more persuasive than a long keyword list.
-              Each description should connect a scientific question to a systems
-              mechanism.
+              I am a computer systems engineer interested in hardware-aware
+              machine learning algorithms, algorithm-hardware co-design, systems
+              for AI, and on-device AI.
+            </p>
+            <p>
+              My recent work has focused on high-performance NPU kernels,
+              distributed LLM training and inference, and reliable accelerator
+              software across Python, C++, host runtimes, and device kernels.
             </p>
           </div>
 
-          <div className="research-list">
-            {researchAreas.map((area) => (
-              <article className="research-row" key={area.number}>
-                <span className="row-number">{area.number}</span>
-                <h3>{area.title}</h3>
-                <p>{area.summary}</p>
-                <ul aria-label={area.title + " topics"}>
-                  {area.tags.map((tag) => (
-                    <li key={tag}>{tag}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+          <div className="profile-links" aria-label="Profile links">
+            <a href="mailto:130bb56@g.skku.edu">Email</a>
+            <a
+              href="https://github.com/130bb56"
+              rel="noreferrer"
+              target="_blank"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/seokhyeon-lee/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
           </div>
         </section>
 
-        <section className="section" id="work" aria-labelledby="work-title">
-          <div className="section-heading compact-heading">
-            <div>
-              <p className="section-kicker">02 · Selected work</p>
-              <h2 id="work-title">Research outputs</h2>
-            </div>
-            <p>
-              Only verified work belongs here. The two entries below demonstrate
-              hierarchy and copy length; they are not publication claims.
-            </p>
-          </div>
-
-          <div className="work-list">
-            {selectedWork.map((work) => (
-              <article className="work-row" key={work.title}>
-                <div className="work-meta">
-                  <span>{work.year}</span>
-                  <small>{work.type}</small>
-                </div>
-                <div className="work-body">
-                  <h3>{work.title}</h3>
-                  <p className="authors">{work.authors}</p>
-                  <p className="venue">{work.venue}</p>
-                  <p className="work-abstract">{work.abstract}</p>
-                </div>
-                <span className="artifact-status">Artifacts pending</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="technical-section" id="writing" aria-labelledby="writing-title">
-          <div className="technical-intro">
-            <p className="section-kicker section-kicker-light">03 · Technical writing</p>
-            <h2 id="writing-title">A serious home for equations and code.</h2>
-            <p>
-              Long-form notes use a narrower reading measure, restrained syntax
-              color, numbered references, and display math that remains legible on
-              mobile screens.
-            </p>
-            <a className="writing-link" href="#note-preview">
-              View note preview
-              <ArrowDownRight size={17} aria-hidden="true" />
+        <section
+          className="view content-view cv-view"
+          id="cv"
+          aria-labelledby="cv-title"
+        >
+          <div className="view-toolbar">
+            <PageHeading
+              eyebrow="Curriculum Vitae"
+              title="Seokhyeon Lee"
+              description="Computer systems engineer working on efficient machine learning and accelerator software."
+            />
+            <a
+              className="pdf-link"
+              href="/CV.pdf"
+              rel="noreferrer"
+              target="_blank"
+            >
+              View PDF
             </a>
           </div>
 
-          <article className="note-preview" id="note-preview">
-            <header className="note-header">
-              <div>
-                <p>Technical note · Systems</p>
-                <h3>Reasoning about the roofline of a fused GPU kernel</h3>
-              </div>
-              <BookOpenText size={22} aria-hidden="true" />
-            </header>
-
-            <p className="note-lede">
-              A compact performance model often reveals whether another optimization
-              pass is likely to matter before we reach for the profiler.
-            </p>
-
-            <div className="equation-block" aria-label="Roofline equation">
-              <span className="equation-number">(1)</span>
-              <div
-                className="equation"
-                aria-label="Performance is bounded by the minimum of peak throughput and arithmetic intensity times memory bandwidth"
-              >
-                <i>P</i>
-                <span> ≤ min(</span>
-                <i>P</i>
-                <sub>peak</sub>
-                <span>, </span>
-                <i>I</i>
-                <span> · </span>
-                <i>B</i>
-                <sub>mem</sub>
-                <span>)</span>
-              </div>
-            </div>
-
-            <div className="definition">
-              <span>Observation 1.</span>
-              <p>
-                Fusion helps only while saved memory traffic outweighs the occupancy
-                or instruction-level cost introduced by the fused program.
-              </p>
-            </div>
-
-            <pre className="code-block" aria-label="CUDA kernel excerpt">
-              <code>
-                <span className="code-comment">
-                  {"// Cooperative tile load with a guarded boundary\n"}
-                </span>
-                <span className="code-keyword">{"__global__"}</span>
-                {" void fused_tile("}
-                <span className="code-type">{"half"}</span>
-                {"* x, "}
-                <span className="code-type">{"half"}</span>
-                {"* y, "}
-                <span className="code-type">{"int"}</span>
-                {" n) {\n  "}
-                <span className="code-type">{"int"}</span>
-                {" i = blockIdx.x * blockDim.x + threadIdx.x;\n  "}
-                <span className="code-keyword">{"if"}</span>
-                {" (i < n) y[i] = "}
-                <span className="code-function">{"__hmax"}</span>
-                {"(x[i], "}
-                <span className="code-number">{"0.0h"}</span>
-                {");\n}"}
-              </code>
-            </pre>
-
-            <footer className="note-footer">
-              <span>[1] Williams et al., Roofline, CACM 2009.</span>
-              <span>6 min read · Updated 20XX</span>
-            </footer>
-          </article>
-        </section>
-
-        <section className="section cv-section" id="cv" aria-labelledby="cv-title">
-          <div className="section-heading compact-heading">
-            <div>
-              <p className="section-kicker">04 · Curriculum vitae</p>
-              <h2 id="cv-title">Condensed CV</h2>
-            </div>
-            <p>
-              The web version gives faculty a fast scan; a dated PDF should remain
-              available for the complete record.
-            </p>
+          <div className="cv-contact" aria-label="Contact information">
+            <a href="mailto:130bb56@g.skku.edu">130bb56@g.skku.edu</a>
+            <a
+              href="https://github.com/130bb56"
+              rel="noreferrer"
+              target="_blank"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/seokhyeon-lee/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
           </div>
 
-          <div className="cv-grid">
-            {cvColumns.map((column) => (
-              <section className="cv-column" key={column.label}>
-                <h3>{column.label}</h3>
-                {column.entries.map(([date, title, detail]) => (
-                  <div className="cv-entry" key={date + title}>
-                    <span>{date}</span>
-                    <strong>{title}</strong>
-                    <p>{detail}</p>
-                  </div>
+          <dl className="cv-summary">
+            <div>
+              <dt>Research Interests</dt>
+              <dd>
+                HW-Aware ML Algorithms, Algorithm-HW Co-design, Systems for AI,
+                On-device AI
+              </dd>
+            </div>
+            <div>
+              <dt>Skills</dt>
+              <dd>
+                C/C++, Python, CUDA, CUTLASS, OpenMP, PyTorch, TensorFlow, Git,
+                GitHub Actions (CI)
+              </dd>
+            </div>
+          </dl>
+
+          <section className="cv-section" aria-labelledby="education-title">
+            <h2 id="education-title">Education</h2>
+            <div className="timeline-list">
+              <article className="timeline-entry">
+                <div>
+                  <h3>Sungkyunkwan University</h3>
+                  <p>B.S. in Computer Science and Engineering</p>
+                </div>
+                <div className="entry-meta">
+                  <span>South Korea</span>
+                  <time>Mar. 2023 - Feb. 2025</time>
+                </div>
+              </article>
+              <article className="timeline-entry">
+                <div>
+                  <h3>Chonnam National University</h3>
+                  <p>
+                    B.S. Candidate in Mechanical Design Engineering
+                    <span className="detail-note">
+                      Transferred to SKKU in 2023
+                    </span>
+                  </p>
+                </div>
+                <div className="entry-meta">
+                  <span>South Korea</span>
+                  <time>Mar. 2017 - Feb. 2023</time>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section className="cv-section" aria-labelledby="experience-title">
+            <h2 id="experience-title">Work Experience</h2>
+            <article className="experience-entry">
+              <div className="experience-heading">
+                <div>
+                  <h3>MOREH</h3>
+                  <p>NPU Software Engineer</p>
+                </div>
+                <div className="entry-meta">
+                  <span>South Korea</span>
+                  <time>May 2025 - Jun. 2026</time>
+                </div>
+              </div>
+              <ul className="cv-bullets">
+                {workHighlights.map((highlight, index) => (
+                  <li key={index}>{highlight}</li>
                 ))}
-              </section>
-            ))}
+              </ul>
+            </article>
+          </section>
+
+          <section className="cv-section" aria-labelledby="cv-project-title">
+            <h2 id="cv-project-title">Personal Project</h2>
+            <article className="experience-entry">
+              <div className="experience-heading">
+                <div>
+                  <h3>HPMC: High-Performance MNIST Classification</h3>
+                </div>
+                <div className="entry-meta">
+                  <time>Feb. 2025 - Mar. 2025</time>
+                </div>
+              </div>
+              <ul className="cv-bullets">
+                <li>
+                  Built a deterministic end-to-end MLP training pipeline in
+                  CUDA/C++ from scratch without cuBLAS or CUTLASS, achieving up
+                  to 8x training speedup and 13% lower GPU memory usage compared
+                  to the PyTorch baseline.
+                </li>
+              </ul>
+            </article>
+          </section>
+
+          <section className="cv-section" aria-labelledby="awards-title">
+            <h2 id="awards-title">Awards</h2>
+            <div className="award-list">
+              <article>
+                <h3>
+                  Silver Prize, National Mathematics Competition for University
+                  Students
+                </h3>
+                <p>Korean Mathematical Society</p>
+                <time>2023, 2024</time>
+              </article>
+              <article>
+                <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
+                <p>Chonnam National University</p>
+                <time>2021, 2022</time>
+              </article>
+            </div>
+          </section>
+
+          <section className="cv-section" aria-labelledby="activities-title">
+            <h2 id="activities-title">Activities</h2>
+            <article className="experience-entry">
+              <div className="experience-heading">
+                <div>
+                  <h3>Sungkyunkwan University</h3>
+                  <p>
+                    Undergraduate Research Intern at Dash Lab, supervised by
+                    Prof. Simon Woo
+                  </p>
+                </div>
+                <div className="entry-meta">
+                  <span>South Korea</span>
+                  <time>Jun. 2024 - Dec. 2024</time>
+                </div>
+              </div>
+              <ul className="cv-bullets">
+                <li>
+                  Read and presented research papers in the field of AI
+                  Security.
+                </li>
+                <li>Contributed to a joint ML project with Kia Motors.</li>
+              </ul>
+            </article>
+
+            <article className="experience-entry tutoring-entry">
+              <div className="experience-heading">
+                <div>
+                  <h3>Programming Tutoring</h3>
+                </div>
+              </div>
+              <ul className="tutoring-list">
+                <li>
+                  <span>Python Programming Tutor for Freshmen</span>
+                  <time>2024</time>
+                </li>
+                <li>
+                  <span>C++ Algorithm Tutor for CS Undergraduate Students</span>
+                  <time>2023</time>
+                </li>
+              </ul>
+            </article>
+          </section>
+        </section>
+
+        <section
+          className="view content-view"
+          id="publications"
+          aria-labelledby="publications-title"
+        >
+          <PageHeading
+            eyebrow="Research Record"
+            title="Publications"
+            description="Peer-reviewed papers, preprints, and technical reports."
+          />
+          <div className="empty-state">
+            <p>No formal publications are listed in the current CV.</p>
+            <span>
+              This page is intentionally kept factual and will be updated when a
+              citable research output is available.
+            </span>
           </div>
         </section>
 
-        <section className="contact-section" id="contact" aria-labelledby="contact-title">
-          <div>
-            <p className="section-kicker">05 · Contact</p>
-            <h2 id="contact-title">Let the work start the conversation.</h2>
+        <section
+          className="view content-view"
+          id="articles"
+          aria-labelledby="articles-title"
+        >
+          <PageHeading
+            eyebrow="Technical Logbook"
+            title="Articles"
+            description="Long-form notes on accelerator kernels, performance analysis, and ML systems."
+          />
+          <div className="empty-state">
+            <p>No articles have been published yet.</p>
+            <span>
+              Future entries will use readable TeX-style mathematics, restrained
+              syntax highlighting, and a narrow scholarly reading column.
+            </span>
           </div>
-          <div className="contact-copy">
+        </section>
+
+        <section
+          className="view content-view"
+          id="projects"
+          aria-labelledby="projects-title"
+        >
+          <PageHeading
+            eyebrow="Selected Engineering"
+            title="Projects"
+            description="Focused implementations that connect algorithms with hardware behavior."
+          />
+          <article className="project-entry">
+            <div className="project-meta">
+              <time>Feb. 2025 - Mar. 2025</time>
+              <span>CUDA · C++ · PyTorch</span>
+            </div>
+            <h2>HPMC: High-Performance MNIST Classification</h2>
             <p>
-              Replace this block with a two-line research fit statement and one
-              professional email address. Keep all cold-email links stable and public.
+              A deterministic end-to-end MLP training pipeline implemented in
+              CUDA/C++ from scratch without cuBLAS or CUTLASS.
             </p>
-            <a href="mailto:your.name@university.edu">
-              your.name@university.edu
-              <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
-          </div>
+            <dl className="project-results">
+              <div>
+                <dt>Training speedup</dt>
+                <dd>Up to 8x</dd>
+              </div>
+              <div>
+                <dt>GPU memory</dt>
+                <dd>13% lower</dd>
+              </div>
+              <div>
+                <dt>Baseline</dt>
+                <dd>PyTorch</dd>
+              </div>
+            </dl>
+          </article>
         </section>
       </main>
 
       <footer className="site-footer">
-        <span>© 20XX Your Name</span>
-        <span>Built for readable research communication.</span>
-        <a href="#top">Back to top ↑</a>
+        <span>© 2026 Seokhyeon Lee</span>
+        <span>Systems for efficient machine learning</span>
       </footer>
     </div>
   );
