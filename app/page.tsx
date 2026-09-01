@@ -465,12 +465,18 @@ export default function Home() {
               </div>
               <ul className="tutoring-list">
                 <li>
-                  <span>Python Programming Tutor for Freshmen</span>
-                  <time>2024</time>
+                  <span className="tutoring-row">
+                    <span>Python Programming Tutor for Freshmen</span>
+                    <time>2024</time>
+                  </span>
                 </li>
                 <li>
-                  <span>C++ Algorithm Tutor for CS Undergraduate Students</span>
-                  <time>2023</time>
+                  <span className="tutoring-row">
+                    <span>
+                      C++ Algorithm Tutor for CS Undergraduate Students
+                    </span>
+                    <time>2023</time>
+                  </span>
                 </li>
               </ul>
             </article>
