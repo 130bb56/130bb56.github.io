@@ -120,6 +120,7 @@ a {
   min-height: 74px;
   align-items: center;
   gap: 22px;
+  padding-inline: 24px;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 96%, transparent);
   box-shadow: var(--header-shadow);
@@ -648,7 +649,7 @@ a {
     min-height: auto;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 14px 12px;
-    padding: 22px 0 16px;
+    padding: 22px 4px 16px;
   }
 
   .primary-nav {
