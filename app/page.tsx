@@ -336,7 +336,7 @@ export default function Home() {
                 </div>
                 <div className="entry-meta">
                   <span>South Korea</span>
-                  <time>Mar. 2023 - Feb. 2025</time>
+                  <time>Mar. 2023 – Feb. 2025</time>
                 </div>
               </article>
               <article className="timeline-entry">
@@ -351,7 +351,7 @@ export default function Home() {
                 </div>
                 <div className="entry-meta">
                   <span>South Korea</span>
-                  <time>Mar. 2017 - Feb. 2023</time>
+                  <time>Mar. 2017 – Feb. 2023</time>
                 </div>
               </article>
             </div>
@@ -367,7 +367,7 @@ export default function Home() {
                 </div>
                 <div className="entry-meta">
                   <span>South Korea</span>
-                  <time>May 2025 - Jun. 2026</time>
+                  <time>May 2025 – Jun. 2026</time>
                 </div>
               </div>
               <ul className="cv-bullets">
@@ -386,7 +386,7 @@ export default function Home() {
                   <h3>HPMC: High-Performance MNIST Classification</h3>
                 </div>
                 <div className="entry-meta">
-                  <time>Feb. 2025 - Mar. 2025</time>
+                  <time>Feb. 2025 – Mar. 2025</time>
                 </div>
               </div>
               <ul className="cv-bullets">
@@ -405,33 +405,47 @@ export default function Home() {
             <div className="award-list">
               <article>
                 <h3>
-                  Silver Prize, National Mathematics Competition for University
-                  Students
+                  National Mathematics Competition for University Students
                 </h3>
-                <p className="award-meta">
-                  Korean Mathematical Society, <time dateTime="2023">2023</time>
-                </p>
+                <span className="award-affiliation">
+                  Korean Mathematical Society
+                </span>
+                <p className="award-achievement">Silver Prize</p>
+                <time className="award-date" dateTime="2023">
+                  2023
+                </time>
               </article>
               <article>
                 <h3>
-                  Silver Prize, National Mathematics Competition for University
-                  Students
+                  National Mathematics Competition for University Students
                 </h3>
-                <p className="award-meta">
-                  Korean Mathematical Society, <time dateTime="2024">2024</time>
-                </p>
+                <span className="award-affiliation">
+                  Korean Mathematical Society
+                </span>
+                <p className="award-achievement">Silver Prize</p>
+                <time className="award-date" dateTime="2024">
+                  2024
+                </time>
               </article>
               <article>
-                <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
-                <p className="award-meta">
-                  Chonnam National University, <time dateTime="2021">2021</time>
-                </p>
+                <h3>Algorithm Problem Solving Competition</h3>
+                <span className="award-affiliation">
+                  Chonnam National University
+                </span>
+                <p className="award-achievement">Silver Prize</p>
+                <time className="award-date" dateTime="2021">
+                  2021
+                </time>
               </article>
               <article>
-                <h3>Silver Prize, Algorithm Problem Solving Competition</h3>
-                <p className="award-meta">
-                  Chonnam National University, <time dateTime="2022">2022</time>
-                </p>
+                <h3>Algorithm Problem Solving Competition</h3>
+                <span className="award-affiliation">
+                  Chonnam National University
+                </span>
+                <p className="award-achievement">Silver Prize</p>
+                <time className="award-date" dateTime="2022">
+                  2022
+                </time>
               </article>
             </div>
           </section>
@@ -449,7 +463,7 @@ export default function Home() {
                 </div>
                 <div className="entry-meta">
                   <span>South Korea</span>
-                  <time>Jun. 2024 - Dec. 2024</time>
+                  <time>Jun. 2024 – Dec. 2024</time>
                 </div>
               </div>
               <ul className="cv-bullets">
@@ -527,10 +541,7 @@ export default function Home() {
             description="Long-form notes on accelerator kernels, performance analysis, and ML systems."
           />
           <div className="article-list">
-            <a
-              className="article-card"
-              href="#article-bayesian-filter"
-            >
+            <a className="article-card" href="#article-bayesian-filter">
               <div className="article-card-meta">
                 <time dateTime={bayesianFilterMetadata.date}>
                   {bayesianFilterMetadata.displayDate}
@@ -553,10 +564,7 @@ export default function Home() {
           aria-labelledby="bayesian-filter-title"
           aria-hidden={activeView !== 'article-bayesian-filter'}
         >
-          <a
-            className="article-back-link"
-            href="#articles"
-          >
+          <a className="article-back-link" href="#articles">
             ← All articles
           </a>
           <header className="article-header">

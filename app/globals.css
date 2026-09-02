@@ -343,7 +343,7 @@ a {
 .cv-section > h2 {
   margin: 0 0 18px;
   color: var(--ink-strong);
-  font-family: var(--font-display);
+  font-family: var(--font-reading);
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -374,10 +374,17 @@ a {
   line-height: 1.4;
 }
 
+.timeline-entry h3,
+.experience-heading h3,
+.award-list h3 {
+  font-family: var(--font-reading);
+}
+
 .timeline-entry p,
 .experience-heading p {
   margin: 3px 0 0;
   color: var(--ink-soft);
+  font-family: var(--font-reading);
 }
 
 .detail-note {
@@ -391,7 +398,7 @@ a {
   display: grid;
   justify-items: end;
   color: var(--ink-subtle);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
   text-align: right;
   white-space: nowrap;
@@ -440,23 +447,44 @@ a {
 .award-list article {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(190px, 0.7fr);
-  gap: 26px;
-  align-items: start;
+  grid-template-areas:
+    'title affiliation'
+    'achievement date';
+  column-gap: 26px;
+  row-gap: 3px;
+  align-items: baseline;
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
 
-.award-meta {
+.award-list h3 {
+  grid-area: title;
+}
+
+.award-affiliation {
+  grid-area: affiliation;
+}
+
+.award-achievement {
+  grid-area: achievement;
   margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-reading);
+  line-height: 1.5;
+}
+
+.award-date {
+  grid-area: date;
+}
+
+.award-affiliation,
+.award-date {
+  justify-self: end;
   color: var(--ink-subtle);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
   text-align: right;
   white-space: nowrap;
-}
-
-.award-meta time {
-  font: inherit;
 }
 
 .tutoring-entry {
@@ -474,7 +502,7 @@ a {
   flex: none;
   color: var(--muted);
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .empty-state {
@@ -901,10 +929,17 @@ html[data-theme='dark'] code[data-theme*=' '] span {
 
   .award-list article {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      'title'
+      'affiliation'
+      'achievement'
+      'date';
     gap: 3px;
   }
 
-  .award-meta {
+  .award-affiliation,
+  .award-date {
+    justify-self: start;
     text-align: left;
   }
 
