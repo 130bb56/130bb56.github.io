@@ -9,6 +9,9 @@ export default defineConfig({
   site: 'https://130bb56.github.io',
   output: 'static',
   trailingSlash: 'always',
+  build: {
+    inlineStylesheets: 'always',
+  },
   integrations: [mdx()],
   markdown: {
     syntaxHighlight: false,
