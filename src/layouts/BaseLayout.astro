@@ -31,7 +31,7 @@ const isCurrent = (href: string) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f7f7" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="robots" content="index, follow" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -40,7 +40,7 @@ const isCurrent = (href: string) => {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&amp;family=PT+Serif:wght@400;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;family=Ubuntu:wght@400;500;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap"
       rel="stylesheet"
     />
     <meta property="og:type" content="website" />
@@ -69,7 +69,7 @@ const isCurrent = (href: string) => {
           document.documentElement.style.colorScheme = theme;
           document
             .querySelector('meta[name="theme-color"]')
-            ?.setAttribute('content', theme === 'dark' ? '#141718' : '#f7f7f7');
+            ?.setAttribute('content', theme === 'dark' ? '#1c1c1d' : '#ffffff');
         } catch {
           document.documentElement.dataset.theme = 'light';
         }
@@ -85,7 +85,7 @@ const isCurrent = (href: string) => {
           aria-label="Seokhyeon Lee, home"
           aria-current={normalizedPath === '/' ? 'page' : undefined}
         >
-          Seokhyeon Lee
+          <strong>Seokhyeon</strong>&nbsp;Lee
         </a>
         <nav class="primary-nav" aria-label="Primary navigation">
           {
@@ -150,7 +150,7 @@ const isCurrent = (href: string) => {
           document.documentElement.style.colorScheme = next;
           document.querySelector('meta[name="theme-color"]')?.setAttribute(
             'content',
-            next === 'dark' ? '#141718' : '#f7f7f7',
+            next === 'dark' ? '#1c1c1d' : '#ffffff',
           );
           try {
             localStorage.setItem('theme', next);
