@@ -12,7 +12,7 @@ const { title, description, currentPath } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const normalizedPath = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
 const navigation = [
-  { href: '/', label: 'HOME' },
+  { href: '/', label: 'ABOUT' },
   { href: '/cv/', label: 'CV' },
   { href: '/publications/', label: 'PUBLICATIONS' },
   { href: '/articles/', label: 'ARTICLES' },
@@ -129,8 +129,7 @@ const isCurrent = (href: string) => {
       </header>
       <main class="site-main"><slot /></main>
       <footer class="site-footer">
-        <span>© 2026 Seokhyeon Lee</span>
-        <span>Systems for efficient machine learning</span>
+        <span>© Copyright 2026 Seokhyeon Lee. Last updated: September 22, 2026.</span>
       </footer>
     </div>
     <script is:inline>
