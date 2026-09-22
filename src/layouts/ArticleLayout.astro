@@ -1,0 +1,44 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Frontmatter {
+  title: string;
+  description: string;
+  date: string;
+  displayDate: string;
+  tags?: string[];
+}
+
+interface Props {
+  frontmatter: Frontmatter;
+}
+
+const { frontmatter } = Astro.props;
+const { title, description, date, displayDate, tags = [] } = frontmatter;
+---
+
+<BaseLayout
+  title={`${title} | Seokhyeon Lee`}
+  description={description}
+  currentPath="/articles/"
+>
+  <section
+    class="view is-active content-view article-view"
+    aria-labelledby="article-title"
+  >
+    <a class="article-back-link" href="/articles/">← All articles</a>
+    <header class="article-header">
+      <p class="page-kicker">Technical Note</p>
+      <h1 id="article-title">{title}</h1>
+      <p class="article-deck">{description}</p>
+      <div class="article-byline">
+        <span>Seokhyeon Lee</span>
+        <time datetime={date}>{displayDate}</time>
+        {tags.length > 0 && <span>{tags.join(' · ')}</span>}
+      </div>
+    </header>
+    <article class="article-prose">
+      <slot />
+    </article>
+  </section>
+</BaseLayout>

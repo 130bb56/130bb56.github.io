@@ -1,0 +1,24 @@
+---
+import PageHeading from '../components/PageHeading.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Projects | Seokhyeon Lee"
+  description="Focused implementations that connect algorithms with hardware behavior."
+  currentPath="/projects/"
+>
+  <section
+    class="view is-active content-view"
+    id="projects"
+    tabindex="-1"
+    aria-labelledby="projects-title"
+  >
+    <PageHeading
+      id="projects-title"
+      eyebrow="Selected Engineering"
+      title="Projects"
+      description="Focused implementations that connect algorithms with hardware behavior."
+    />
+  </section>
+</BaseLayout>

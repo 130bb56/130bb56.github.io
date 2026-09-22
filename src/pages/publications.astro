@@ -1,0 +1,31 @@
+---
+import PageHeading from '../components/PageHeading.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Publications | Seokhyeon Lee"
+  description="Peer-reviewed papers, preprints, and technical reports."
+  currentPath="/publications/"
+>
+  <section
+    class="view is-active content-view"
+    id="publications"
+    tabindex="-1"
+    aria-labelledby="publications-title"
+  >
+    <PageHeading
+      id="publications-title"
+      eyebrow="Research Record"
+      title="Publications"
+      description="Peer-reviewed papers, preprints, and technical reports."
+    />
+    <div class="empty-state">
+      <p>No formal publications are listed in the current CV.</p>
+      <span>
+        This page is intentionally kept factual and will be updated when a citable
+        research output is available.
+      </span>
+    </div>
+  </section>
+</BaseLayout>

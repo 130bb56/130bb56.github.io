@@ -1,0 +1,59 @@
+---
+import PageHeading from '../../components/PageHeading.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface ArticleFrontmatter {
+  slug: string;
+  title: string;
+  date: string;
+  displayDate: string;
+  description: string;
+  tags?: string[];
+}
+
+interface ArticleModule {
+  frontmatter: ArticleFrontmatter;
+}
+
+const modules = import.meta.glob<ArticleModule>('./*.mdx', { eager: true });
+const articles = Object.values(modules)
+  .map(({ frontmatter }) => frontmatter)
+  .filter((article) => article.slug)
+  .sort((left, right) => Date.parse(right.date) - Date.parse(left.date));
+---
+
+<BaseLayout
+  title="Articles | Seokhyeon Lee"
+  description="Long-form notes on machine learning systems, performance engineering, and the mathematical tools behind them."
+  currentPath="/articles/"
+>
+  <section
+    class="view is-active content-view"
+    id="articles"
+    tabindex="-1"
+    aria-labelledby="articles-title"
+  >
+    <PageHeading
+      id="articles-title"
+      eyebrow="Technical Logbook"
+      title="Articles"
+      description="Long-form notes on machine learning systems, performance engineering, and the mathematical tools behind them."
+    />
+
+    <div class="article-list">
+      {
+        articles.map((article) => (
+          <a class="article-card" href={`/articles/${article.slug}/`}>
+            <div class="article-card-meta">
+              <time datetime={article.date}>{article.displayDate}</time>
+              {article.tags && article.tags.length > 0 && <span>{article.tags.join(' · ')}</span>}
+            </div>
+            <h2>{article.title}</h2>
+            <p>{article.description}</p>
+            <span class="article-card-link">Read article →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

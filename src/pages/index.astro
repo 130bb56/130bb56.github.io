@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Seokhyeon Lee — ML Systems"
+  description="Seokhyeon Lee's academic profile in ML systems, hardware-aware AI, and accelerator software."
+  currentPath="/"
+>
+  <section class="view is-active home-view" id="home" tabindex="-1" aria-labelledby="home-title">
+    <p class="page-kicker">ML Systems · Hardware-Aware AI</p>
+    <h1 id="home-title">Seokhyeon Lee</h1>
+    <div class="intro-copy">
+      <p>
+        I am a computer systems engineer interested in hardware-aware machine
+        learning algorithms, algorithm-hardware co-design, systems for AI, and
+        on-device AI.
+      </p>
+      <p>
+        My recent work has focused on high-performance NPU kernels, distributed
+        LLM training and inference, and reliable accelerator software across
+        Python, C++, host runtimes, and device kernels.
+      </p>
+    </div>
+    <div class="profile-links" aria-label="Profile links">
+      <a href="mailto:130bb56@gmail.com">Email</a>
+      <a href="https://github.com/130bb56" rel="noreferrer" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/seokhyeon-lee/" rel="noreferrer" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+  <script is:inline>
+    const legacyRoutes = {
+      '#home': '/',
+      '#cv': '/cv/',
+      '#publications': '/publications/',
+      '#articles': '/articles/',
+      '#article-bayesian-filter': '/articles/introduction-to-bayesian-filter/',
+      '#projects': '/projects/',
+      '#contact': '/contact/',
+    };
+    const destination = legacyRoutes[window.location.hash];
+    if (destination && window.location.pathname !== destination) {
+      window.location.replace(destination);
+    }
+  </script>
+</BaseLayout>

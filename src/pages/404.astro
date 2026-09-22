@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | Seokhyeon Lee"
+  description="The requested page could not be found."
+  currentPath="/404/"
+>
+  <section class="view is-active content-view" tabindex="-1" aria-labelledby="not-found-title">
+    <header class="page-heading">
+      <p class="page-kicker">404</p>
+      <h1 id="not-found-title">Page Not Found</h1>
+      <p>The requested page could not be found.</p>
+    </header>
+    <p><a class="inline-link" href="/">Return home</a></p>
+  </section>
+</BaseLayout>

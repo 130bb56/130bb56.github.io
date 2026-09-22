@@ -1,0 +1,222 @@
+---
+import PageHeading from '../components/PageHeading.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="CV | Seokhyeon Lee"
+  description="Curriculum vitae of Seokhyeon Lee, a computer systems engineer working on efficient machine learning and accelerator software."
+  currentPath="/cv/"
+>
+  <section
+    class="view is-active content-view cv-view"
+    id="cv"
+    tabindex="-1"
+    aria-labelledby="cv-title"
+  >
+    <div class="view-toolbar">
+      <PageHeading
+        id="cv-title"
+        eyebrow="Curriculum Vitae"
+        title="Seokhyeon Lee"
+        description="Computer systems engineer working on efficient machine learning and accelerator software."
+      />
+    </div>
+
+    <dl class="cv-summary">
+      <div>
+        <dt>Research Interests</dt>
+        <dd>
+          HW-Aware ML Algorithms, Algorithm-HW Co-design, Systems for AI,
+          On-device AI
+        </dd>
+      </div>
+      <div>
+        <dt>Skills</dt>
+        <dd>
+          C/C++, Python, CUDA, CUTLASS, OpenMP, PyTorch, TensorFlow, Git, GitHub
+          Actions (CI)
+        </dd>
+      </div>
+    </dl>
+
+    <section class="cv-section" aria-labelledby="education-title">
+      <h2 id="education-title">Education</h2>
+      <div class="timeline-list">
+        <article class="timeline-entry">
+          <div>
+            <h3>Sungkyunkwan University</h3>
+            <p>B.S. in Computer Science and Engineering</p>
+          </div>
+          <div class="entry-meta">
+            <span>South Korea</span>
+            <time>Mar. 2023 – Feb. 2025</time>
+          </div>
+        </article>
+        <article class="timeline-entry">
+          <div>
+            <h3>Chonnam National University</h3>
+            <p>
+              B.S. Candidate in Mechanical Design Engineering
+              <span class="detail-note">Transferred to SKKU in 2023</span>
+            </p>
+          </div>
+          <div class="entry-meta">
+            <span>South Korea</span>
+            <time>Mar. 2017 – Feb. 2023</time>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="experience-title">
+      <h2 id="experience-title">Work Experience</h2>
+      <article class="experience-entry">
+        <div class="experience-heading">
+          <div>
+            <h3>MOREH</h3>
+            <p>NPU Software Engineer</p>
+          </div>
+          <div class="entry-meta">
+            <span>South Korea</span>
+            <time>May 2025 – Jun. 2026</time>
+          </div>
+        </div>
+        <ul class="cv-bullets">
+          <li>
+            Implemented and optimized Tenstorrent NPU kernels for distributed
+            LLM training and inference across pytest validation, Python/C++
+            bindings, host runtime, device kernels, and the SFPU's SIMD
+            instructions.
+          </li>
+          <li>
+            Designed and implemented a multicore cumsum kernel based on the
+            Sklansky parallel-prefix sum, using NoC multicast and
+            inter/intra-core semaphore synchronization, achieving a 110x
+            speedup over the baseline tt-metal kernel.
+          </li>
+          <li>
+            Diagnosed and fixed a nondeterministic hang in composite
+            collective-communication kernels caused by trace replay corrupting
+            L1-resident semaphores (analogous to CUDA Graph replay).
+            <a
+              class="inline-link"
+              href="https://github.com/tenstorrent/tt-metal/pull/40276"
+              rel="noreferrer"
+              target="_blank">#40276</a
+            >
+          </li>
+          <li>
+            Developed a vLLM plugin for Tenstorrent NPUs, enabling end-to-end
+            serving of models from a few billion to hundreds of billions of
+            parameters, including Qwen3, Llama3, and GPT-OSS, while resolving
+            stability and performance regressions.
+            <a
+              class="inline-link"
+              href="https://github.com/tenstorrent/tt-metal/pull/43692"
+              rel="noreferrer"
+              target="_blank">#43692</a
+            >
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-project-title">
+      <h2 id="cv-project-title">Personal Project</h2>
+      <article class="experience-entry">
+        <div class="experience-heading">
+          <div>
+            <h3>HPMC: High-Performance MNIST Classification</h3>
+          </div>
+          <div class="entry-meta">
+            <time>Feb. 2025 – Mar. 2025</time>
+          </div>
+        </div>
+        <ul class="cv-bullets">
+          <li>
+            Built a deterministic end-to-end MLP training pipeline in CUDA/C++
+            from scratch without cuBLAS or CUTLASS, achieving up to 8x training
+            speedup and 13% lower GPU memory usage compared to the PyTorch
+            baseline.
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="cv-section" aria-labelledby="awards-title">
+      <h2 id="awards-title">Awards</h2>
+      <div class="award-list">
+        <article>
+          <h3>National Mathematics Competition for University Students</h3>
+          <span class="award-affiliation">Korean Mathematical Society</span>
+          <p class="award-achievement">Silver Prize</p>
+          <time class="award-date" datetime="2023">2023</time>
+        </article>
+        <article>
+          <h3>National Mathematics Competition for University Students</h3>
+          <span class="award-affiliation">Korean Mathematical Society</span>
+          <p class="award-achievement">Silver Prize</p>
+          <time class="award-date" datetime="2024">2024</time>
+        </article>
+        <article>
+          <h3>Algorithm Problem Solving Competition</h3>
+          <span class="award-affiliation">Chonnam National University</span>
+          <p class="award-achievement">Silver Prize</p>
+          <time class="award-date" datetime="2021">2021</time>
+        </article>
+        <article>
+          <h3>Algorithm Problem Solving Competition</h3>
+          <span class="award-affiliation">Chonnam National University</span>
+          <p class="award-achievement">Silver Prize</p>
+          <time class="award-date" datetime="2022">2022</time>
+        </article>
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="activities-title">
+      <h2 id="activities-title">Activities</h2>
+      <article class="experience-entry">
+        <div class="experience-heading">
+          <div>
+            <h3>Sungkyunkwan University</h3>
+            <p>
+              Undergraduate Research Intern at Dash Lab, supervised by Prof.
+              Simon Woo
+            </p>
+          </div>
+          <div class="entry-meta">
+            <span>South Korea</span>
+            <time>Jun. 2024 – Dec. 2024</time>
+          </div>
+        </div>
+        <ul class="cv-bullets">
+          <li>Read and presented research papers in the field of AI Security.</li>
+          <li>Contributed to a joint ML project with Kia Motors.</li>
+        </ul>
+      </article>
+
+      <article class="experience-entry tutoring-entry">
+        <div class="experience-heading">
+          <div>
+            <h3>Programming Tutoring</h3>
+          </div>
+        </div>
+        <ul class="tutoring-list">
+          <li>
+            <span class="tutoring-row">
+              <span>Python Programming Tutor for Freshmen</span>
+              <time>2024</time>
+            </span>
+          </li>
+          <li>
+            <span class="tutoring-row">
+              <span>C++ Algorithm Tutor for CS Undergraduate Students</span>
+              <time>2023</time>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </section>
+  </section>
+</BaseLayout>
